@@ -1,3 +1,6 @@
+Version 0.0.3
+    - Login page completed.
+
 Version 0.0.2
     - Navigation added.
     - Register page completed.
