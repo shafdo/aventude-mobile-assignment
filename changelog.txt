@@ -1,2 +1,7 @@
+Version 0.0.2
+    - Navigation added.
+    - Register page completed.
+    - Login page added but incomplete.
+
 Version 0.0.1
     - Project setup
