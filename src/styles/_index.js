@@ -1,6 +1,21 @@
 import { StyleSheet } from 'react-native';
 
+const cardStyles = {
+  cardContent: {
+    paddingTop: 15,
+    paddingBottom: 20
+  },
+  cardTitle: {
+    marginBottom: 10
+  }
+};
+
+// This will be the main styles conponent that is exported
 export const styles = StyleSheet.create({
+  container: {
+    marginRight: 15,
+    marginLeft: 15
+  },
   textInput: {
     justifyContent: 'center',
     borderWidth: 1,
@@ -11,7 +26,7 @@ export const styles = StyleSheet.create({
     marginBottom: 20
   },
   paragraph: {
-    fontSize: 18
+    fontSize: 16
   },
   heading1: {
     fontSize: 36,
@@ -32,5 +47,6 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     marginTop: 40,
     marginBottom: 40
-  }
+  },
+  ...cardStyles
 });

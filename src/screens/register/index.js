@@ -5,7 +5,7 @@ import { styles } from '../../styles/_index';
 
 const registerScreen = () => {
   return (
-    <View>
+    <View style={{ ...styles.container }}>
       <Text style={{ ...styles.heading2, textAlign: 'center' }}>Welcome to register</Text>
 
       <View style={{ marginBottom: 20 }}>

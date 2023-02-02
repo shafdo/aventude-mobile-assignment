@@ -4,7 +4,7 @@ import { styles } from '../../styles/_index';
 
 const LoginScreen = () => {
   return (
-    <View>
+    <View style={{ ...styles.container }}>
       <Text style={{ ...styles.heading2, textAlign: 'center' }}>Login</Text>
 
       <View style={{ marginBottom: 20 }}>
@@ -14,7 +14,7 @@ const LoginScreen = () => {
 
       <Button style={{ padding: 50 }} title="Login" />
       <Text style={{ ...styles.paragraph, textAlign: 'center', marginTop: 40 }}>
-        Don't have an account. <Link to={{ screen: 'Register' }}>Register now</Link>.
+        Don't have an account yet. Click <Link to={{ screen: 'Register' }}>here</Link> to register.
       </Text>
     </View>
   );
