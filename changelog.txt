@@ -1,4 +1,10 @@
 Version 0.0.5
+    - React native buttons changed to react native paper button.
+    - Added product price and stock to product card in product catalog screen.
+    - Dynamic product loading added to product catalog page.
+    - Stack navigators removed due to not using them.
+
+Version 0.0.5
     - Product catalog page scrollable screen added.
     - Styles changes.
 

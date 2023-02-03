@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button, Text, View, TextInput } from 'react-native';
+import { Text, View, TextInput } from 'react-native';
 import { Link } from '@react-navigation/native';
+import { Button } from 'react-native-paper';
 import { styles } from '../../styles/_index';
 
 const registerScreen = () => {
@@ -14,7 +15,7 @@ const registerScreen = () => {
         <TextInput editable maxLength={40} placeholder="Confirm your password" style={styles.textInput} />
       </View>
 
-      <Button title="Register" />
+      <Button mode="contained">Register</Button>
       <Text style={{ ...styles.paragraph, textAlign: 'center', marginTop: 40 }}>
         Already have an account?{' '}
         <Link to={{ screen: 'Login' }} style={{ ...styles.link }}>

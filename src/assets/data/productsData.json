@@ -1,0 +1,30 @@
+[
+  {
+    "title": "Canvas shoes",
+    "description": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fuga molestias recusandae ducimus, rem enim dolorum voluptates laboriosam iusto.",
+    "price": 60,
+    "stock": 100,
+    "thumbnail": "https://source.unsplash.com/0BKZfcamvGg"
+  },
+  {
+    "title": "Nikee shoes",
+    "description": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fuga molestias recusandae ducimus, rem enim dolorum voluptates laboriosam iusto.",
+    "price": 100,
+    "stock": 10,
+    "thumbnail": "https://source.unsplash.com/s-gYAbQToXk"
+  },
+  {
+    "title": "Woman jacket",
+    "description": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fuga molestias recusandae ducimus, rem enim dolorum voluptates laboriosam iusto.",
+    "price": 60,
+    "stock": 25,
+    "thumbnail": "https://source.unsplash.com/ua9ReZlzcIE"
+  },
+  {
+    "title": "Smart watch",
+    "description": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fuga molestias recusandae ducimus, rem enim dolorum voluptates laboriosam iusto.",
+    "price": 150,
+    "stock": 50,
+    "thumbnail": "https://source.unsplash.com/0vsk2_9dkqo"
+  }
+]

@@ -10,6 +10,24 @@ const cardStyles = {
   },
   cardTitle: {
     marginBottom: 10
+  },
+  cardUnitWrapper: {
+    marginTop: 20,
+    marginBottom: 30,
+    paddingRight: 20,
+    paddingLeft: 20,
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  cardPrice: {
+    fontSize: 20
+  },
+  cardStock: {
+    fontSize: 20
+  },
+  cardGotoProduct: {
+    fontSize: 16
   }
 };
 
