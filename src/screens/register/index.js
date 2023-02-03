@@ -16,7 +16,11 @@ const registerScreen = () => {
 
       <Button title="Register" />
       <Text style={{ ...styles.paragraph, textAlign: 'center', marginTop: 40 }}>
-        Already have an account. <Link to={{ screen: 'Login' }}>Login here</Link>.
+        Already have an account?{' '}
+        <Link to={{ screen: 'Login' }} style={{ ...styles.link }}>
+          Login here
+        </Link>
+        .
       </Text>
     </View>
   );

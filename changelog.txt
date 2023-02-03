@@ -1,6 +1,10 @@
+Version 0.0.5
+    - Product catalog page scrollable screen added.
+    - Styles changes.
+
 Version 0.0.4
     - Homepage completed.
-    - Producr page added but incomplete.
+    - Product page added but incomplete.
     - Styles changes.
 
 Version 0.0.3

@@ -1,6 +1,9 @@
 import { StyleSheet } from 'react-native';
 
 const cardStyles = {
+  card: {
+    marginBottom: 40
+  },
   cardContent: {
     paddingTop: 15,
     paddingBottom: 20
@@ -14,7 +17,9 @@ const cardStyles = {
 export const styles = StyleSheet.create({
   container: {
     marginRight: 15,
-    marginLeft: 15
+    marginLeft: 15,
+    flex: 1,
+    marginBottom: 40
   },
   textInput: {
     justifyContent: 'center',
@@ -48,5 +53,8 @@ export const styles = StyleSheet.create({
     marginTop: 40,
     marginBottom: 40
   },
-  ...cardStyles
+  ...cardStyles,
+  link: {
+    fontWeight: 'bold'
+  }
 });
