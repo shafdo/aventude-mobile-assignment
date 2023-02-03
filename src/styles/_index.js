@@ -36,6 +36,11 @@ const layoutStyles = {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center'
+  },
+  flexBetween: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   }
 };
 
@@ -82,6 +87,10 @@ export const styles = StyleSheet.create({
   },
   link: {
     fontWeight: 'bold'
+  },
+  divider: {
+    marginTop: 15,
+    marginBottom: 15
   },
   ...cardStyles,
   ...layoutStyles
