@@ -1,8 +1,7 @@
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import LoginScreen from '../screens/public/login';
-import registerScreen from '../screens/public/register';
-// import HomeScreen from '../screens/public/home';
+import LoginScreen from '../screens/public/Login';
+import registerScreen from '../screens/public/Register';
 import HomeNavigator from './HomeStackNavigator';
 
 const DrawerNavigator = () => {

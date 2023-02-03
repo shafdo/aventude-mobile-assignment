@@ -1,3 +1,7 @@
+Version 0.0.7
+    - Product screen completed.
+    - Styles changes.
+
 Version 0.0.6
     - React navigation stack navigator added.
     - Screen folder structure changed.

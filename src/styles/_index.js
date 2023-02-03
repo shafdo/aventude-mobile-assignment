@@ -57,7 +57,8 @@ export const styles = StyleSheet.create({
     marginBottom: 20
   },
   paragraph: {
-    fontSize: 16
+    fontSize: 16,
+    lineHeight: 26
   },
   heading1: {
     fontSize: 36,
