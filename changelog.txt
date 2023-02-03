@@ -1,3 +1,6 @@
+Version 0.0.9
+    - Splash screen and other app icons added.
+
 Version 0.0.8
     - Checkout screen completed.
     - Styles changes.
