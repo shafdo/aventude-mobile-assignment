@@ -31,6 +31,14 @@ const cardStyles = {
   }
 };
 
+const layoutStyles = {
+  flexCenter: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center'
+  }
+};
+
 // This will be the main styles conponent that is exported
 export const styles = StyleSheet.create({
   container: {
@@ -71,8 +79,9 @@ export const styles = StyleSheet.create({
     marginTop: 40,
     marginBottom: 40
   },
-  ...cardStyles,
   link: {
     fontWeight: 'bold'
-  }
+  },
+  ...cardStyles,
+  ...layoutStyles
 });

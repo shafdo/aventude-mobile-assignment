@@ -27,8 +27,8 @@ const HomeScreen = () => {
                   </Button>
                 </View>
 
-                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
-                  <Link to={{ screen: 'Register' }}>
+                <View style={{ ...styles.flexCenter }}>
+                  <Link to={{ screen: 'Product' }}>
                     <Button icon="magnify" mode="contained" labelStyle={{ ...styles.cardGotoProduct }}>
                       View Product
                     </Button>
