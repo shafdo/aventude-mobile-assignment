@@ -12,7 +12,13 @@ const ProductScreen = ({ route, navigation }) => {
           <Card.Cover source={{ uri: route.params.product.thumbnail }} />
         </Card>
 
-        <Text style={{ marginBottom: 40, ...styles.paragraph }}>{route.params.product.description}</Text>
+        <Text style={{ marginBottom: 30, ...styles.paragraph }}>{route.params.product.description}</Text>
+
+        <View style={{ ...styles.flexBetween }}>
+          <Text style={{ ...styles.heading3, paddingLeft: 20, paddingRight: 20, marginTop: 0 }}>{'$ ' + route.params.product.price}</Text>
+          <Text style={{ ...styles.heading3, paddingLeft: 20, paddingRight: 20, marginTop: 0 }}>{'Qty: ' + route.params.product.stock}</Text>
+        </View>
+
         <Button icon="cart-check" mode="contained" style={{ marginBottom: 40 }} onPress={() => navigation.navigate('Home', { screen: 'Checkout', params: { product: route.params.product } })}>
           Buy Now
         </Button>

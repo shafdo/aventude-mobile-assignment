@@ -1,3 +1,7 @@
+Version 0.0.11
+    - Product screen added price and stock.
+    - Checkout added basic qty change UI. 
+
 Version 0.0.10
     - Readme added.
 

@@ -41,6 +41,14 @@ const layoutStyles = {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between'
+  },
+  flexEnd: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end'
+  },
+  alignCenter: {
+    alignItems: 'center'
   }
 };
 

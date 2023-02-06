@@ -19,7 +19,15 @@ const CheckoutScreen = ({ route }) => {
             <Card.Cover source={{ uri: route.params.product.thumbnail }} />
           </Card>
           <Text style={{ ...styles.heading3, marginBottom: 0, marginTop: 20 }}>{route.params.product.title}</Text>
-          <Text style={{ ...styles.heading2, marginBottom: 10, marginTop: 8 }}>{'$ ' + route.params.product.price}</Text>
+
+          <View style={{ ...styles.flexBetween }}>
+            <Text style={{ ...styles.heading2, marginBottom: 10, marginTop: 8 }}>{'$ ' + route.params.product.price}</Text>
+            <View style={{ ...styles.flexEnd, ...styles.alignCenter }}>
+              <Text style={{ ...styles.heading3, marginTop: 0, marginBottom: 0 }}>-</Text>
+              <Text style={{ ...styles.heading3, marginTop: 0, marginBottom: 0 }}>1</Text>
+              <Text style={{ ...styles.heading3, marginTop: 0, marginBottom: 0 }}>+</Text>
+            </View>
+          </View>
         </View>
 
         <Divider horizontalInset={true} bold={true} style={{ ...styles.divider }} />
