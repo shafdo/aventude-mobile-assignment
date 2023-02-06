@@ -1,9 +1,31 @@
-import { Text, View, ScrollView } from 'react-native';
+import { useEffect, useState } from 'react';
+import { Text, View, ScrollView, Alert } from 'react-native';
 import { Card, Button, Divider, TextInput } from 'react-native-paper';
+import { Icon } from 'react-native-elements';
 import { styles } from '../../styles/_index';
 
 const CheckoutScreen = ({ route }) => {
-  //   console.log(route);
+  const [qty, setQty] = useState(1);
+  const [total, setTotal] = useState(route.params.product.price);
+
+  const showError = (title, desc) => {
+    return Alert.alert(title, desc, [{ text: 'OK' }]);
+  };
+
+  useEffect(() => {
+    if (qty < 1) {
+      showError('Not allowed', 'You cannot set order quantity less than 1.');
+      return setQty(1);
+    }
+
+    if (qty > route.params.product.stock) {
+      showError('Not allowed', 'Maximum stock exceeded.');
+      return setQty(route.params.product.stock);
+    }
+
+    setTotal(route.params.product.price * qty);
+  }, [qty]);
+
   return (
     <ScrollView style={{ flex: 1, backgroundColor: 'white' }}>
       <View style={{ ...styles.container, marginBottom: 0 }}>
@@ -21,11 +43,11 @@ const CheckoutScreen = ({ route }) => {
           <Text style={{ ...styles.heading3, marginBottom: 0, marginTop: 20 }}>{route.params.product.title}</Text>
 
           <View style={{ ...styles.flexBetween }}>
-            <Text style={{ ...styles.heading2, marginBottom: 10, marginTop: 8 }}>{'$ ' + route.params.product.price}</Text>
+            <Text style={{ ...styles.heading2, marginBottom: 10, marginTop: 8 }}>{'$ ' + total}</Text>
             <View style={{ ...styles.flexEnd, ...styles.alignCenter }}>
-              <Text style={{ ...styles.heading3, marginTop: 0, marginBottom: 0 }}>-</Text>
-              <Text style={{ ...styles.heading3, marginTop: 0, marginBottom: 0 }}>1</Text>
-              <Text style={{ ...styles.heading3, marginTop: 0, marginBottom: 0 }}>+</Text>
+              <Icon name="remove" size={28} onPress={() => setQty(qty - 1)} />
+              <Text style={{ ...styles.heading2, marginVertical: 0, paddingHorizontal: 6 }}>{qty}</Text>
+              <Icon name="add" size={28} onPress={() => setQty(qty + 1)} />
             </View>
           </View>
         </View>
@@ -34,7 +56,7 @@ const CheckoutScreen = ({ route }) => {
 
         <View style={{ ...styles.flexBetween }}>
           <Text style={{ ...styles.paragraph, marginTop: 20, marginBottom: 0 }}>Sub Total</Text>
-          <Text style={{ ...styles.paragraph, marginTop: 20, marginBottom: 0 }}>{'$ ' + route.params.product.price}</Text>
+          <Text style={{ ...styles.paragraph, marginTop: 20, marginBottom: 0 }}>{'$ ' + total}</Text>
         </View>
         <View style={{ ...styles.flexBetween }}>
           <Text style={{ ...styles.paragraph, marginTop: 0 }}>Shipping</Text>
@@ -45,7 +67,7 @@ const CheckoutScreen = ({ route }) => {
 
         <View style={{ ...styles.flexBetween }}>
           <Text style={{ ...styles.paragraph, marginTop: 0, marginBottom: 10 }}>Total</Text>
-          <Text style={{ ...styles.heading3, marginTop: 0, marginBottom: 10 }}>{'$ ' + route.params.product.price}</Text>
+          <Text style={{ ...styles.heading3, marginTop: 0, marginBottom: 10 }}>{'$ ' + total}</Text>
         </View>
 
         <View>

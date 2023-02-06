@@ -75,23 +75,19 @@ export const styles = StyleSheet.create({
   },
   heading1: {
     fontSize: 36,
-    marginTop: 40,
-    marginBottom: 40
+    marginVertical: 40
   },
   heading2: {
     fontSize: 30,
-    marginTop: 40,
-    marginBottom: 40
+    marginVertical: 40
   },
   heading3: {
     fontSize: 24,
-    marginTop: 40,
-    marginBottom: 40
+    marginVertical: 40
   },
   heading4: {
     fontSize: 18,
-    marginTop: 40,
-    marginBottom: 40
+    marginVertical: 40
   },
   link: {
     fontWeight: 'bold'
