@@ -1,3 +1,7 @@
+Version 0.0.16
+    - Logout implemented.
+    - Profile screen added.
+
 Version 0.0.15
     - Redux setup.
     - Authenticated drawer added.
