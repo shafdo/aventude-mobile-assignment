@@ -1,9 +1,12 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
 import AppNavigationContainer from './src/navigations';
-import * as SplashScreen from 'expo-splash-screen';
+import { Provider } from 'react-redux';
+import { store } from './src/redux/store';
 
 export default function App() {
-  return <AppNavigationContainer></AppNavigationContainer>;
+  return (
+    <Provider store={store}>
+      <AppNavigationContainer></AppNavigationContainer>
+    </Provider>
+  );
 }

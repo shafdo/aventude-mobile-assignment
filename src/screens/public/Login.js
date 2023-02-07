@@ -3,9 +3,10 @@ import { Text, View, TextInput } from 'react-native';
 import { Button, Dialog } from 'react-native-paper';
 import { Link } from '@react-navigation/native';
 import { styles } from '../../styles/_index';
-import { ErrorAlert } from '../../components/Alert';
 import { DefaultLoader } from '../../components/Loader';
 import { LoginApi } from '../../api/user.api';
+import { login } from '../../redux/store';
+import { useDispatch } from 'react-redux';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -16,6 +17,8 @@ const LoginScreen = ({ navigation }) => {
   const [alertVisible, setAlertVisible] = useState(false);
   const [alertTitle, setAlertTitle] = useState('');
   const [alertMsg, setAlertMsg] = useState('');
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (isLoggedIn) return navigation.navigate('Home', { screen: 'Catalog' });
@@ -51,6 +54,7 @@ const LoginScreen = ({ navigation }) => {
     if (res.status != 200) return showAlert('Failed', res.data);
 
     showAlert('Success', 'Logged inn successfully.');
+    dispatch(login({ email: email, isLoggedIn: true }));
     setIsLoggedIn(true);
     return;
   };
