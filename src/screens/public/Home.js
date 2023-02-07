@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View, ScrollView } from 'react-native';
 import { styles } from '../../styles/_index';
-import { Card, Button } from 'react-native-paper';
+import { Card, Button, TextInput } from 'react-native-paper';
 import productData from '../../assets/data/productsData.json';
 
 const HomeScreen = ({ navigation }) => {
@@ -11,6 +11,10 @@ const HomeScreen = ({ navigation }) => {
     <ScrollView style={{ flex: 1, backgroundColor: 'white' }}>
       <View style={{ ...styles.container }}>
         <Text style={{ ...styles.heading2, textAlign: 'center' }}>Products</Text>
+
+        <View style={{ ...styles.flexCenter, marginBottom: 40 }}>
+          <TextInput style={{ width: '85%', fontSize: 18 }} placeholder="Search for product" left={<TextInput.Icon icon="magnify" />} />
+        </View>
 
         {productData.map((product) => {
           return (

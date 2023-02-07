@@ -96,6 +96,15 @@ export const styles = StyleSheet.create({
     marginTop: 15,
     marginBottom: 15
   },
+  loader: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    height: '100%',
+    zIndex: 100,
+    backgroundColor: '#ffffffe7'
+  },
   ...cardStyles,
   ...layoutStyles
 });

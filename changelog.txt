@@ -1,3 +1,9 @@
+Version 0.0.13
+    - Environment variables added.
+    - Login integrated with backend.
+    - New alert components added.
+    - New loader components added.
+
 Version 0.0.12
     - Checkout added basic qty change UI cool icons added.
     - After splash screen set startup page to register.
