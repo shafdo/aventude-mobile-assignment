@@ -10,3 +10,13 @@ export const LoginApi = (email, password) => {
   const response = Axios.post(`${API_ENDPOINT}/user/login`, postData);
   return response;
 };
+
+export const RegisterApi = (email, password) => {
+  const postData = {
+    email,
+    password
+  };
+
+  const response = Axios.post(`${API_ENDPOINT}/user/register`, postData);
+  return response;
+};

@@ -21,9 +21,16 @@ const LoginScreen = ({ navigation }) => {
     if (isLoggedIn) return navigation.navigate('Home', { screen: 'Catalog' });
   }, [isLoggedIn]);
 
+  const showAlert = (title, msg) => {
+    setAlertVisible(true);
+    setAlertTitle(title);
+    setAlertMsg(msg);
+    return;
+  };
+
   const onSubmit = async () => {
     // Validations
-    if (email.length <= 0 || password.length <= 0) return ErrorAlert('Error', 'One or more inputs not filled.');
+    if (email.length <= 0 || password.length <= 0) return showAlert('Error', 'One or more inputs not filled.');
 
     // Start loader
     setSpinnerAnimate(true);
@@ -41,17 +48,10 @@ const LoginScreen = ({ navigation }) => {
     setSpinnerAnimate(false);
 
     // Show alert with response
-    setAlertVisible(true);
-    if (res.status != 200) {
-      setAlertTitle('Failed');
-      setAlertMsg(res.data);
-      setIsLoggedIn(false);
-    } else {
-      setAlertTitle('Success');
-      setAlertMsg('Logged inn successfully.');
-      setIsLoggedIn(true);
-    }
+    if (res.status != 200) return showAlert('Failed', res.data);
 
+    showAlert('Success', 'Logged inn successfully.');
+    setIsLoggedIn(true);
     return;
   };
 
@@ -62,7 +62,7 @@ const LoginScreen = ({ navigation }) => {
 
       <View style={{ marginBottom: 20 }}>
         <TextInput editable maxLength={40} placeholder="Enter your email" style={styles.textInput} onChangeText={(text) => setEmail(text)} />
-        <TextInput editable maxLength={40} placeholder="Enter password" style={styles.textInput} onChangeText={(text) => setPassword(text)} />
+        <TextInput editable maxLength={40} secureTextEntry placeholder="Enter password" style={styles.textInput} onChangeText={(text) => setPassword(text)} />
       </View>
 
       <Button mode="contained" onPress={() => onSubmit()}>
