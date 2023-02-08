@@ -1,3 +1,7 @@
+Version 0.0.18
+    - Product searching implemented.
+    - Missing props passing added to product screen.
+
 Version 0.0.17
     - Redirection screen changes.
     - Redux default value changes for user.

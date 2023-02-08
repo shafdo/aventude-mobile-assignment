@@ -1,5 +1,11 @@
 import { StyleSheet } from 'react-native';
 
+const searchBoxStyles = {
+  searchbox: {
+    backgroundColor: '#ffffff'
+  }
+};
+
 const cardStyles = {
   card: {
     marginBottom: 40
@@ -106,5 +112,6 @@ export const styles = StyleSheet.create({
     backgroundColor: '#ffffffe7'
   },
   ...cardStyles,
-  ...layoutStyles
+  ...layoutStyles,
+  ...searchBoxStyles
 });

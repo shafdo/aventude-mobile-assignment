@@ -6,7 +6,7 @@ import { styles } from '../../styles/_index';
 
 const CheckoutScreen = ({ route }) => {
   const [qty, setQty] = useState(1);
-  const [total, setTotal] = useState(route.params.product.price);
+  const [total, setTotal] = useState(route.params.product.productPrice);
 
   const showError = (title, desc) => {
     return Alert.alert(title, desc, [{ text: 'OK' }]);
@@ -18,12 +18,12 @@ const CheckoutScreen = ({ route }) => {
       return setQty(1);
     }
 
-    if (qty > route.params.product.stock) {
+    if (qty > route.params.product.productStock) {
       showError('Not allowed', 'Maximum stock exceeded.');
-      return setQty(route.params.product.stock);
+      return setQty(route.params.product.productStock);
     }
 
-    setTotal(route.params.product.price * qty);
+    setTotal(route.params.product.productPrice * qty);
   }, [qty]);
 
   return (
@@ -38,9 +38,9 @@ const CheckoutScreen = ({ route }) => {
 
         <View>
           <Card style={{ ...styles.card, marginBottom: 0 }}>
-            <Card.Cover source={{ uri: route.params.product.thumbnail }} />
+            <Card.Cover source={{ uri: route.params.product.productThumbnail }} />
           </Card>
-          <Text style={{ ...styles.heading3, marginBottom: 0, marginTop: 20 }}>{route.params.product.title}</Text>
+          <Text style={{ ...styles.heading3, marginBottom: 0, marginTop: 20 }}>{route.params.product.productName}</Text>
 
           <View style={{ ...styles.flexBetween }}>
             <Text style={{ ...styles.heading2, marginBottom: 10, marginTop: 8 }}>{'$ ' + total}</Text>
