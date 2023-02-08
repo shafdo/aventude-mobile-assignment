@@ -24,6 +24,7 @@ const registerScreen = ({ navigation }) => {
   };
 
   const redirectToLogin = () => {
+    setAlertVisible(false);
     return navigation.navigate('Login');
   };
 

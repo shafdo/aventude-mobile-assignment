@@ -1,3 +1,8 @@
+Version 0.0.20
+    - Checkout screen integrated with backend.
+    - Profile orders code update.
+    - Home screen products loader added. 
+
 Version 0.0.19
     - Profile page integrated with backend.
     - Missing props passing added to product screen.

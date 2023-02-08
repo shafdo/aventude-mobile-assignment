@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Text, ScrollView, View } from 'react-native';
+import { useEffect, useState, useCallback } from 'react';
+import { Text, ScrollView, View, RefreshControl } from 'react-native';
 import { Card, Button } from 'react-native-paper';
 import { SvgUri } from 'react-native-svg';
 import { useSelector } from 'react-redux';
@@ -8,10 +8,11 @@ import Icon from 'react-native-vector-icons/Feather';
 import { styles } from '../../styles/_index';
 
 const ProfileScreen = ({ route }) => {
-  const { uid, email } = useSelector((state) => state.user.value);
+  const { email } = useSelector((state) => state.user.value);
   const uri = `https://api.dicebear.com/5.x/initials/svg?radius=50&seed=${email}`;
 
   const [orders, setOrders] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     getUserOrders();
@@ -26,12 +27,22 @@ const ProfileScreen = ({ route }) => {
         return error.response;
       });
 
-    if (res.status != 200) return setOrders([]);
+    if (res.status != 200) return;
     return setOrders(res.data);
   };
 
+  // Refesh orders
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    getUserOrders();
+
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
+
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: 'white' }}>
+    <ScrollView style={{ flex: 1, backgroundColor: 'white' }} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
       <View style={{ ...styles.flexCenter, marginTop: 50 }}>
         <SvgUri width="150" height="150" uri={uri} />
       </View>
@@ -52,17 +63,47 @@ const ProfileScreen = ({ route }) => {
         )}
 
         {orders.map((userOrder) => {
-          return (
-            <Card style={{ ...styles.card }}>
-              <Card.Content style={{ ...styles.cardContent }}>
-                <View style={{ marginBottom: 20 }}>
-                  <Card.Title titleVariant="titleLarge" titleStyle={{ ...styles.cardTitle }} title={userOrder.product.productName}></Card.Title>
-                  <Text style={{ ...styles.paragraph, marginVertical: 5, marginHorizontal: 18 }}>{'Order Status: ' + userOrder.order.orderStatus}</Text>
-                  <Text style={{ ...styles.paragraph, marginVertical: 5, marginHorizontal: 18 }}>{'Order Qty: ' + userOrder.order.orderQty}</Text>
-                </View>
-              </Card.Content>
-            </Card>
-          );
+          const orderStatus = userOrder.order.orderStatus.toLowerCase();
+          switch (orderStatus) {
+            case 'complete':
+              return (
+                <Card style={{ ...styles.card, backgroundColor: '#00B96B' }}>
+                  <Card.Content style={{ ...styles.cardContent }}>
+                    <View style={{ marginBottom: 20 }}>
+                      <Card.Title titleVariant="titleLarge" titleStyle={{ ...styles.cardTitle, textDecorationLine: 'line-through' }} title={userOrder.product.productName}></Card.Title>
+                      <Text style={{ ...styles.paragraph, marginVertical: 5, marginHorizontal: 18, textTransform: 'capitalize' }}>{'Order Status: ' + userOrder.order.orderStatus}</Text>
+                      <Text style={{ ...styles.paragraph, marginVertical: 5, marginHorizontal: 18 }}>{'Order Qty: ' + userOrder.order.orderQty}</Text>
+                    </View>
+                  </Card.Content>
+                </Card>
+              );
+
+            case 'processing':
+              return (
+                <Card style={{ ...styles.card, backgroundColor: '#F2BD27' }}>
+                  <Card.Content style={{ ...styles.cardContent }}>
+                    <View style={{ marginBottom: 20 }}>
+                      <Card.Title titleVariant="titleLarge" titleStyle={{ ...styles.cardTitle }} title={userOrder.product.productName}></Card.Title>
+                      <Text style={{ ...styles.paragraph, marginVertical: 5, marginHorizontal: 18, textTransform: 'capitalize' }}>{'Order Status: ' + userOrder.order.orderStatus}</Text>
+                      <Text style={{ ...styles.paragraph, marginVertical: 5, marginHorizontal: 18 }}>{'Order Qty: ' + userOrder.order.orderQty}</Text>
+                    </View>
+                  </Card.Content>
+                </Card>
+              );
+
+            case 'shipped':
+              return (
+                <Card style={{ ...styles.card, backgroundColor: '#6fabff' }}>
+                  <Card.Content style={{ ...styles.cardContent }}>
+                    <View style={{ marginBottom: 20 }}>
+                      <Card.Title titleVariant="titleLarge" titleStyle={{ ...styles.cardTitle }} title={userOrder.product.productName}></Card.Title>
+                      <Text style={{ ...styles.paragraph, marginVertical: 5, marginHorizontal: 18, textTransform: 'capitalize' }}>{'Order Status: ' + userOrder.order.orderStatus}</Text>
+                      <Text style={{ ...styles.paragraph, marginVertical: 5, marginHorizontal: 18 }}>{'Order Qty: ' + userOrder.order.orderQty}</Text>
+                    </View>
+                  </Card.Content>
+                </Card>
+              );
+          }
         })}
       </View>
     </ScrollView>

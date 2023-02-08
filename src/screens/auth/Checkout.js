@@ -1,12 +1,35 @@
 import { useEffect, useState } from 'react';
 import { Text, View, ScrollView, Alert } from 'react-native';
-import { Card, Button, Divider, TextInput } from 'react-native-paper';
+import { Card, Button, Divider, TextInput, Dialog } from 'react-native-paper';
 import { Icon } from 'react-native-elements';
 import { styles } from '../../styles/_index';
+import { useSelector } from 'react-redux';
+import { PlaceOrderApi } from '../../api/order.api';
+import { DefaultLoader } from '../../components/Loader';
 
-const CheckoutScreen = ({ route }) => {
+const CheckoutScreen = ({ navigation, route }) => {
   const [qty, setQty] = useState(1);
   const [total, setTotal] = useState(route.params.product.productPrice);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [alertTitle, setAlertTitle] = useState('');
+  const [alertMsg, setAlertMsg] = useState('');
+
+  const showAlert = (title, msg) => {
+    setAlertVisible(true);
+    setAlertTitle(title);
+    setAlertMsg(msg);
+    return;
+  };
+
+  const { isLoggedIn } = useSelector((state) => state.user.value);
+  const productId = route.params.product.productId;
+
+  // useEffect Functions
+  useEffect(() => {
+    if (!isLoggedIn) return showAlert('Error', 'You must login before placing order.');
+  }, [isLoggedIn]);
 
   const showError = (title, desc) => {
     return Alert.alert(title, desc, [{ text: 'OK' }]);
@@ -25,9 +48,34 @@ const CheckoutScreen = ({ route }) => {
 
     setTotal(route.params.product.productPrice * qty);
   }, [qty]);
+  // useEffect Functions End
+
+  const redirectToLogin = () => {
+    setAlertVisible(false);
+    if (isLoggedIn) return;
+    return navigation.navigate('Login');
+  };
+
+  const placeOrder = async () => {
+    setIsLoading(true);
+    const res = await PlaceOrderApi(productId, qty)
+      .then((response) => {
+        return response;
+      })
+      .catch((error) => {
+        return error.response;
+      });
+
+    setIsLoading(false);
+
+    if (res.status != 200) return showAlert('Error', res.data);
+    return showAlert('Success', res.data);
+  };
 
   return (
     <ScrollView style={{ flex: 1, backgroundColor: 'white' }}>
+      <DefaultLoader animating={isLoading}></DefaultLoader>
+
       <View style={{ ...styles.container, marginBottom: 0 }}>
         <Text style={{ ...styles.heading2, textAlign: 'center', marginBottom: 0 }}>Checkout</Text>
 
@@ -76,9 +124,22 @@ const CheckoutScreen = ({ route }) => {
         </View>
 
         <View style={{ marginTop: 40, marginBottom: 40 }}>
-          <Button mode="contained">Pay Now</Button>
+          <Button mode="contained" onPress={() => placeOrder()}>
+            Pay Now
+          </Button>
         </View>
       </View>
+
+      {/* Alerts */}
+      <Dialog visible={alertVisible}>
+        <Dialog.Title>{alertTitle}</Dialog.Title>
+        <Dialog.Content>
+          <Text variant="bodyMedium">{alertMsg}</Text>
+        </Dialog.Content>
+        <Dialog.Actions>
+          <Button onPress={() => redirectToLogin()}>Ok</Button>
+        </Dialog.Actions>
+      </Dialog>
     </ScrollView>
   );
 };

@@ -1,6 +1,8 @@
 import Axios from 'axios';
 import { API_ENDPOINT } from '@env';
 
+Axios.defaults.withCredentials = true;
+
 export const LoginApi = (email, password) => {
   const postData = {
     email,

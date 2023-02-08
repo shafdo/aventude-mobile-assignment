@@ -5,17 +5,20 @@ import { Card, Button, TextInput } from 'react-native-paper';
 import { ProductsApi } from '../../api/product.api';
 import { SearchProductApi } from '../../api/search.api';
 import Icon from 'react-native-vector-icons/Feather';
+import { DefaultLoader } from '../../components/Loader';
 
 const HomeScreen = ({ navigation }) => {
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchSwitch, setSearchSwitch] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     getProducts();
   }, []);
 
   const getProducts = async () => {
+    setIsLoading(true);
     const res = await ProductsApi()
       .then((response) => {
         return response;
@@ -23,13 +26,18 @@ const HomeScreen = ({ navigation }) => {
       .catch((error) => {
         return error.response;
       });
+
+    setIsLoading(false);
     setSearchSwitch(false);
     setProducts(res.data);
+    setSearchTerm('');
   };
 
   const searchProductName = async () => {
-    if (searchTerm.length <= 1) return getProducts();
+    if (searchTerm.length <= 1) return;
 
+    setIsLoading(true);
+    setProducts([]);
     const res = await SearchProductApi(searchTerm)
       .then((response) => {
         return response;
@@ -38,6 +46,7 @@ const HomeScreen = ({ navigation }) => {
         return error.response;
       });
 
+    setIsLoading(false);
     setSearchSwitch(true);
 
     if (res.status != 200) return setProducts([]);
@@ -46,16 +55,34 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <ScrollView style={{ flex: 1, backgroundColor: 'white' }}>
+      <DefaultLoader animating={isLoading}></DefaultLoader>
+
       <View style={{ ...styles.container }}>
-        <View style={{ ...styles.flexCenter, flexWrap: 'wrap', marginVertical: 40 }}>
-          <TextInput style={{ ...styles.searchbox, width: '85%', fontSize: 18, marginBottom: 20 }} placeholder="Search for product" left={<TextInput.Icon icon="magnify" />} onChangeText={(text) => setSearchTerm(text)} />
-          <Button icon="magnify" mode="contained" onPress={() => searchProductName()} style={{ width: '50%' }}>
+        {/* Searchbox */}
+        <View style={{ ...styles.flexCenter, flexWrap: 'wrap', marginTop: 40 }}>
+          <TextInput style={{ ...styles.searchbox, width: '85%', fontSize: 18 }} placeholder="Search for product" left={<TextInput.Icon icon="magnify" />} onChangeText={(text) => setSearchTerm(text)} value={searchTerm} />
+        </View>
+
+        <View style={{ ...styles.flexCenter, marginVertical: 40 }}>
+          {/* Reset Search Input */}
+          {searchSwitch ? (
+            <Button icon="trash-can-outline" mode="contained" onPress={() => getProducts()} buttonColor="#ff5144" style={{ width: '35%', marginHorizontal: 10 }}>
+              Reset
+            </Button>
+          ) : (
+            ''
+          )}
+
+          {/* Search Button */}
+          <Button icon="magnify" mode="contained" onPress={() => searchProductName()} style={{ width: '50%', marginHorizontal: 10 }}>
             Search
           </Button>
         </View>
 
-        {searchSwitch ? <Text style={{ ...styles.heading3, textAlign: 'center', marginTop: 10, marginBottom: 30 }}>{"Search Results for '" + searchTerm + "'"}</Text> : <Text style={{ ...styles.heading2, textAlign: 'center', marginVertical: 10 }}>All Products</Text>}
+        {/* Search result block */}
+        {!isLoading && searchSwitch ? <Text style={{ ...styles.heading3, textAlign: 'center', marginVertical: 10 }}>{"Search Results for '" + searchTerm + "'"}</Text> : <Text style={{ ...styles.heading2, textAlign: 'center', marginTop: 10, marginBottom: 40 }}>All Products</Text>}
 
+        {/* No products found block */}
         {products.length <= 0 ? (
           <View style={{ marginVertical: 40 }}>
             <View style={{ ...styles.flexCenter, flexWrap: 'wrap' }}>
@@ -67,6 +94,7 @@ const HomeScreen = ({ navigation }) => {
           ''
         )}
 
+        {/* Loop products */}
         {products.map((product) => {
           return (
             <Card style={{ ...styles.card }}>
