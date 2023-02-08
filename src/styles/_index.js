@@ -1,5 +1,11 @@
 import { StyleSheet } from 'react-native';
 
+const searchBoxStyles = {
+  searchbox: {
+    backgroundColor: '#ffffff'
+  }
+};
+
 const cardStyles = {
   card: {
     marginBottom: 40
@@ -41,6 +47,14 @@ const layoutStyles = {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between'
+  },
+  flexEnd: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end'
+  },
+  alignCenter: {
+    alignItems: 'center'
   }
 };
 
@@ -67,23 +81,19 @@ export const styles = StyleSheet.create({
   },
   heading1: {
     fontSize: 36,
-    marginTop: 40,
-    marginBottom: 40
+    marginVertical: 40
   },
   heading2: {
     fontSize: 30,
-    marginTop: 40,
-    marginBottom: 40
+    marginVertical: 40
   },
   heading3: {
     fontSize: 24,
-    marginTop: 40,
-    marginBottom: 40
+    marginVertical: 40
   },
   heading4: {
     fontSize: 18,
-    marginTop: 40,
-    marginBottom: 40
+    marginVertical: 40
   },
   link: {
     fontWeight: 'bold'
@@ -92,6 +102,16 @@ export const styles = StyleSheet.create({
     marginTop: 15,
     marginBottom: 15
   },
+  loader: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    height: '100%',
+    zIndex: 100,
+    backgroundColor: '#ffffffe7'
+  },
   ...cardStyles,
-  ...layoutStyles
+  ...layoutStyles,
+  ...searchBoxStyles
 });

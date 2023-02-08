@@ -1,3 +1,47 @@
+Version 0.0.20
+    - Checkout screen integrated with backend.
+    - Profile orders code update.
+    - Home screen products loader added. 
+
+Version 0.0.19
+    - Profile page integrated with backend.
+    - Missing props passing added to product screen.
+
+Version 0.0.18
+    - Product searching implemented.
+    - Missing props passing added to product screen.
+
+Version 0.0.17
+    - Redirection screen changes.
+    - Redux default value changes for user.
+    - Products catalog integrated with backend.
+
+Version 0.0.16
+    - Logout implemented.
+    - Profile screen added.
+
+Version 0.0.15
+    - Redux setup.
+    - Authenticated drawer added.
+
+Version 0.0.14
+    - Registration integrated with backend.
+
+Version 0.0.13
+    - Environment variables added.
+    - Login integrated with backend.
+    - New alert components added.
+    - New loader components added.
+
+Version 0.0.12
+    - Checkout added basic qty change UI cool icons added.
+    - After splash screen set startup page to register.
+    - Checkout frontend logic added + validations.
+
+Version 0.0.11
+    - Product screen added price and stock.
+    - Checkout added basic qty change UI. 
+
 Version 0.0.10
     - Readme added.
 
