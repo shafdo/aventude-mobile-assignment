@@ -4,7 +4,7 @@ import { Button, Dialog } from 'react-native-paper';
 import { Link } from '@react-navigation/native';
 import { styles } from '../../styles/_index';
 import { DefaultLoader } from '../../components/Loader';
-import { LoginApi } from '../../api/user.api';
+import { GetUserInfoApi, LoginApi } from '../../api/user.api';
 import { login } from '../../redux/store';
 import { useDispatch } from 'react-redux';
 
@@ -31,6 +31,18 @@ const LoginScreen = ({ navigation }) => {
     return;
   };
 
+  const getUserId = async () => {
+    const res = await GetUserInfoApi()
+      .then((response) => {
+        return response;
+      })
+      .catch((error) => {
+        return error.response;
+      });
+
+    return res.data.userId;
+  };
+
   const onSubmit = async () => {
     // Validations
     if (email.length <= 0 || password.length <= 0) return showAlert('Error', 'One or more inputs not filled.');
@@ -54,7 +66,8 @@ const LoginScreen = ({ navigation }) => {
     if (res.status != 200) return showAlert('Failed', res.data);
 
     showAlert('Success', 'Logged inn successfully.');
-    dispatch(login({ email: email, isLoggedIn: true }));
+    const uid = await getUserId();
+    dispatch(login({ uid: uid, email: email, isLoggedIn: true }));
     setIsLoggedIn(true);
     return;
   };

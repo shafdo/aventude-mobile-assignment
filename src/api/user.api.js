@@ -11,6 +11,11 @@ export const LoginApi = (email, password) => {
   return response;
 };
 
+export const GetUserInfoApi = () => {
+  const response = Axios.get(`${API_ENDPOINT}/user`);
+  return response;
+};
+
 export const RegisterApi = (email, password) => {
   const postData = {
     email,

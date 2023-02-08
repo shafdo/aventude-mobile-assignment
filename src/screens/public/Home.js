@@ -47,7 +47,6 @@ const HomeScreen = ({ navigation }) => {
   return (
     <ScrollView style={{ flex: 1, backgroundColor: 'white' }}>
       <View style={{ ...styles.container }}>
-        {/* <Text style={{ ...styles.heading2, textAlign: 'center' }}>Products</Text> */}
         <View style={{ ...styles.flexCenter, flexWrap: 'wrap', marginVertical: 40 }}>
           <TextInput style={{ ...styles.searchbox, width: '85%', fontSize: 18, marginBottom: 20 }} placeholder="Search for product" left={<TextInput.Icon icon="magnify" />} onChangeText={(text) => setSearchTerm(text)} />
           <Button icon="magnify" mode="contained" onPress={() => searchProductName()} style={{ width: '50%' }}>
