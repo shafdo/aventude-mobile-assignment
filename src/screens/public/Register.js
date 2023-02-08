@@ -23,6 +23,10 @@ const registerScreen = ({ navigation }) => {
     return;
   };
 
+  const redirectToLogin = () => {
+    return navigation.navigate('Login');
+  };
+
   const onSubmit = async () => {
     // Validations
     if (email.length <= 0 || password.length <= 0 || confirmPassword.length <= 0) return showAlert('Error', 'One or more inputs not filled.');
@@ -80,7 +84,7 @@ const registerScreen = ({ navigation }) => {
           <Text variant="bodyMedium">{alertMsg}</Text>
         </Dialog.Content>
         <Dialog.Actions>
-          <Button onPress={() => setAlertVisible(false)}>Ok</Button>
+          <Button onPress={() => redirectToLogin()}>Ok</Button>
         </Dialog.Actions>
       </Dialog>
     </View>

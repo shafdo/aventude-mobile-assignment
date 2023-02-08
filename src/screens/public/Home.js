@@ -2,10 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { Text, View, ScrollView } from 'react-native';
 import { styles } from '../../styles/_index';
 import { Card, Button, TextInput } from 'react-native-paper';
-import productData from '../../assets/data/productsData.json';
+import { ProductsApi } from '../../api/product.api';
 
 const HomeScreen = ({ navigation }) => {
-  const [products, setProducts] = useState({});
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const getProducts = async () => {
+      const res = await ProductsApi()
+        .then((response) => {
+          return response;
+        })
+        .catch((error) => {
+          return error.response;
+        });
+      setProducts(res.data);
+    };
+    getProducts();
+  }, []);
 
   return (
     <ScrollView style={{ flex: 1, backgroundColor: 'white' }}>
@@ -16,17 +30,17 @@ const HomeScreen = ({ navigation }) => {
           <TextInput style={{ width: '85%', fontSize: 18 }} placeholder="Search for product" left={<TextInput.Icon icon="magnify" />} />
         </View>
 
-        {productData.map((product) => {
+        {products.map((product) => {
           return (
             <Card style={{ ...styles.card }}>
-              <Card.Cover source={{ uri: product.thumbnail }} />
+              <Card.Cover source={{ uri: product.productThumbnail }} />
               <Card.Content style={{ ...styles.cardContent }}>
-                <Card.Title titleVariant="titleLarge" titleStyle={{ ...styles.cardTitle }} title={product.title} subtitle={product.description}></Card.Title>
+                <Card.Title titleVariant="titleLarge" titleStyle={{ ...styles.cardTitle }} title={product.productName} subtitle={product.productDesc}></Card.Title>
 
                 <View style={{ ...styles.cardUnitWrapper }}>
-                  <Text style={{ ...styles.cardPrice }}>{'$ ' + product.price}</Text>
+                  <Text style={{ ...styles.cardPrice }}>{'$ ' + product.productPrice}</Text>
                   <Button icon="bucket-outline" mode="contained-tonal" labelStyle={{ ...styles.cardStock }}>
-                    {product.stock}
+                    {product.productStock}
                   </Button>
                 </View>
 

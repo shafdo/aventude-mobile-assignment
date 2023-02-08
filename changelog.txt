@@ -1,3 +1,8 @@
+Version 0.0.17
+    - Redirection screen changes.
+    - Redux default value changes for user.
+    - Products catalog integrated with backend.
+
 Version 0.0.16
     - Logout implemented.
     - Profile screen added.

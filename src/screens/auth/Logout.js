@@ -12,7 +12,9 @@ const LogoutScreen = ({ navigation, route }) => {
 
   const logoutUser = () => {
     dispatch(logout());
-    redirectToHome();
+    setTimeout(() => {
+      return navigation.navigate('Login');
+    }, 5);
   };
 
   return (
