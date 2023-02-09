@@ -7,6 +7,8 @@ import { DefaultLoader } from '../../components/Loader';
 import { GetUserInfoApi, LoginApi } from '../../api/user.api';
 import { login } from '../../redux/store';
 import { useDispatch } from 'react-redux';
+import { clearProducts, addProducts } from '../../redux/store';
+import { ProductsApi } from '../../api/product.api';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -21,8 +23,25 @@ const LoginScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (isLoggedIn) return navigation.navigate('Home', { screen: 'Catalog' });
+    if (isLoggedIn) redirectToHome();
   }, [isLoggedIn]);
+
+  const redirectToHome = () => {
+    getProducts();
+  };
+
+  const getProducts = async () => {
+    await ProductsApi()
+      .then((response) => {
+        console.log('ABC');
+        console.log(response.data);
+        dispatch(addProducts({ data: response.data }));
+        // return navigation.navigate('Home', { screen: 'Catalog' });
+      })
+      .catch((error) => {
+        return error.response;
+      });
+  };
 
   const showAlert = (title, msg) => {
     setAlertVisible(true);

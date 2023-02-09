@@ -34,6 +34,7 @@ const ProfileScreen = ({ route }) => {
   // Refesh orders
   const onRefresh = useCallback(() => {
     setRefreshing(true);
+    console.log('exec');
     getUserOrders();
 
     setTimeout(() => {
