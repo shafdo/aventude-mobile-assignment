@@ -22,25 +22,24 @@ const LoginScreen = ({ navigation }) => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (isLoggedIn) redirectToHome();
-  }, [isLoggedIn]);
-
   const redirectToHome = () => {
+    console.log('Redirect to home exec');
     getProducts();
   };
 
   const getProducts = async () => {
-    await ProductsApi()
+    const res = await ProductsApi()
       .then((response) => {
-        console.log('ABC');
-        console.log(response.data);
-        dispatch(addProducts({ data: response.data }));
-        // return navigation.navigate('Home', { screen: 'Catalog' });
+        return response;
       })
       .catch((error) => {
         return error.response;
       });
+
+    console.log('ABC');
+    console.log(res.data);
+    dispatch(addProducts({ data: res.data }));
+    return navigation.navigate('Home', { screen: 'Catalog' });
   };
 
   const showAlert = (title, msg) => {
@@ -88,6 +87,7 @@ const LoginScreen = ({ navigation }) => {
     const uid = await getUserId();
     dispatch(login({ uid: uid, email: email, isLoggedIn: true }));
     setIsLoggedIn(true);
+    redirectToHome();
     return;
   };
 

@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Text, View, ScrollView } from 'react-native';
 import { styles } from '../../styles/_index';
 import { Card, Button, TextInput } from 'react-native-paper';
-import { ProductsApi } from '../../api/product.api';
 import { SearchProductApi } from '../../api/search.api';
 import Icon from 'react-native-vector-icons/Feather';
 import { DefaultLoader } from '../../components/Loader';
 import { useSelector, useDispatch } from 'react-redux';
-import { clearProducts, addProducts } from '../../redux/store';
+import { addSearchProducts, clearSearchProducts } from '../../redux/store';
 
 const HomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -20,25 +19,11 @@ const HomeScreen = ({ navigation }) => {
 
   useEffect(() => {
     console.log('useEffect running');
-    getProducts();
-  }, []);
-
-  const getProducts = async () => {
-    setIsLoading(true);
-    const res = await ProductsApi()
-      .then((response) => {
-        return response;
-      })
-      .catch((error) => {
-        return error.response;
-      });
-
-    setIsLoading(false);
-    setSearchResetSwitch(false);
-    // dispatch(addProducts({ data: res.data }));
-    console.log('This is from Home');
-    console.log(reduxProducts);
     setProducts(reduxProducts);
+  }, [reduxProducts]);
+
+  const resetSearch = async () => {
+    setSearchResetSwitch(false);
     setSearchTerm('');
   };
 
@@ -46,8 +31,7 @@ const HomeScreen = ({ navigation }) => {
     if (searchTerm.length <= 1) return;
 
     setIsLoading(true);
-    dispatch(clearProducts());
-    setProducts(reduxProducts);
+    dispatch(clearSearchProducts());
     const res = await SearchProductApi(searchTerm)
       .then((response) => {
         return response;
@@ -59,9 +43,9 @@ const HomeScreen = ({ navigation }) => {
     setIsLoading(false);
     setSearchResetSwitch(true);
 
-    if (res.status != 200) return setProducts([]);
-    dispatch(addProducts({ data: res.data }));
-    setProducts(reduxProducts);
+    if (res.status != 200) res.data = [];
+    dispatch(addSearchProducts({ data: res.data }));
+    return navigation.navigate('Home', { screen: 'Search', params: { searchTerm } });
   };
 
   return (
@@ -77,7 +61,7 @@ const HomeScreen = ({ navigation }) => {
         <View style={{ ...styles.flexCenter, marginVertical: 40 }}>
           {/* Reset Search Input (searchResetSwitch) */}
           {searchResetSwitch ? (
-            <Button icon="trash-can-outline" mode="contained" onPress={() => getProducts()} buttonColor="#ff5144" style={{ width: '35%', marginHorizontal: 10 }}>
+            <Button icon="trash-can-outline" mode="contained" onPress={() => resetSearch()} buttonColor="#ff5144" style={{ width: '35%', marginHorizontal: 10 }}>
               Reset
             </Button>
           ) : (
