@@ -28,6 +28,7 @@ const ProfileScreen = ({ route }) => {
       });
 
     if (res.status != 200) return;
+    console.log(res.data);
     return setOrders(res.data);
   };
 
