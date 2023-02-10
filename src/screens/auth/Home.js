@@ -2,34 +2,28 @@ import React, { useEffect, useState } from 'react';
 import { Text, View, ScrollView } from 'react-native';
 import { styles } from '../../styles/_index';
 import { Card, Button, TextInput } from 'react-native-paper';
-import { ProductsApi } from '../../api/product.api';
 import { SearchProductApi } from '../../api/search.api';
 import Icon from 'react-native-vector-icons/Feather';
 import { DefaultLoader } from '../../components/Loader';
+import { useSelector, useDispatch } from 'react-redux';
+import { addSearchProducts, clearSearchProducts } from '../../redux/store';
 
 const HomeScreen = ({ navigation }) => {
-  const [products, setProducts] = useState([]);
+  const dispatch = useDispatch();
+  const reduxProducts = useSelector((state) => state.products.value.data);
+
+  const [products, setProducts] = useState(reduxProducts);
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchSwitch, setSearchSwitch] = useState(false);
+  const [searchResetSwitch, setSearchResetSwitch] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    getProducts();
-  }, []);
+    console.log('useEffect running');
+    setProducts(reduxProducts);
+  }, [reduxProducts]);
 
-  const getProducts = async () => {
-    setIsLoading(true);
-    const res = await ProductsApi()
-      .then((response) => {
-        return response;
-      })
-      .catch((error) => {
-        return error.response;
-      });
-
-    setIsLoading(false);
-    setSearchSwitch(false);
-    setProducts(res.data);
+  const resetSearch = async () => {
+    setSearchResetSwitch(false);
     setSearchTerm('');
   };
 
@@ -37,7 +31,7 @@ const HomeScreen = ({ navigation }) => {
     if (searchTerm.length <= 1) return;
 
     setIsLoading(true);
-    setProducts([]);
+    dispatch(clearSearchProducts());
     const res = await SearchProductApi(searchTerm)
       .then((response) => {
         return response;
@@ -47,10 +41,11 @@ const HomeScreen = ({ navigation }) => {
       });
 
     setIsLoading(false);
-    setSearchSwitch(true);
+    setSearchResetSwitch(true);
 
-    if (res.status != 200) return setProducts([]);
-    setProducts(res.data);
+    if (res.status != 200) res.data = [];
+    dispatch(addSearchProducts({ data: res.data }));
+    return navigation.navigate('Home', { screen: 'Search', params: { searchTerm } });
   };
 
   return (
@@ -64,9 +59,9 @@ const HomeScreen = ({ navigation }) => {
         </View>
 
         <View style={{ ...styles.flexCenter, marginVertical: 40 }}>
-          {/* Reset Search Input */}
-          {searchSwitch ? (
-            <Button icon="trash-can-outline" mode="contained" onPress={() => getProducts()} buttonColor="#ff5144" style={{ width: '35%', marginHorizontal: 10 }}>
+          {/* Reset Search Input (searchResetSwitch) */}
+          {searchResetSwitch ? (
+            <Button icon="trash-can-outline" mode="contained" onPress={() => resetSearch()} buttonColor="#ff5144" style={{ width: '35%', marginHorizontal: 10 }}>
               Reset
             </Button>
           ) : (
@@ -79,8 +74,8 @@ const HomeScreen = ({ navigation }) => {
           </Button>
         </View>
 
-        {/* Search result block */}
-        {!isLoading && searchSwitch ? <Text style={{ ...styles.heading3, textAlign: 'center', marginVertical: 10 }}>{"Search Results for '" + searchTerm + "'"}</Text> : <Text style={{ ...styles.heading2, textAlign: 'center', marginTop: 10, marginBottom: 40 }}>All Products</Text>}
+        {/* () Search result block (searchResetSwitch) */}
+        {!isLoading && searchResetSwitch ? <Text style={{ ...styles.heading3, textAlign: 'center', marginVertical: 10 }}>{"Search Results for '" + searchTerm + "'"}</Text> : <Text style={{ ...styles.heading2, textAlign: 'center', marginTop: 10, marginBottom: 40 }}>All Products</Text>}
 
         {/* No products found block */}
         {products.length <= 0 ? (

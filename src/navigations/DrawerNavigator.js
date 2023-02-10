@@ -22,7 +22,6 @@ const DrawerNavigator = () => {
   } else {
     return (
       <Drawer.Navigator initialRouteName="Login">
-        <Drawer.Screen name="Home" component={HomeNavigator} options={{ headerTitle: '' }}></Drawer.Screen>
         <Drawer.Screen name="Register" component={registerScreen}></Drawer.Screen>
         <Drawer.Screen name="Login" component={LoginScreen}></Drawer.Screen>
       </Drawer.Navigator>

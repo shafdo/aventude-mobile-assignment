@@ -31,10 +31,6 @@ const CheckoutScreen = ({ navigation, route }) => {
     if (!isLoggedIn) return showAlert('Error', 'You must login before placing order.');
   }, [isLoggedIn]);
 
-  const showError = (title, desc) => {
-    return Alert.alert(title, desc, [{ text: 'OK' }]);
-  };
-
   useEffect(() => {
     if (qty < 1) {
       showError('Not allowed', 'You cannot set order quantity less than 1.');
@@ -49,6 +45,10 @@ const CheckoutScreen = ({ navigation, route }) => {
     setTotal(route.params.product.productPrice * qty);
   }, [qty]);
   // useEffect Functions End
+
+  const showError = (title, desc) => {
+    return Alert.alert(title, desc, [{ text: 'OK' }]);
+  };
 
   const redirectToLogin = () => {
     setAlertVisible(false);

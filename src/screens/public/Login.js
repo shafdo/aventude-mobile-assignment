@@ -7,6 +7,8 @@ import { DefaultLoader } from '../../components/Loader';
 import { GetUserInfoApi, LoginApi } from '../../api/user.api';
 import { login } from '../../redux/store';
 import { useDispatch } from 'react-redux';
+import { clearProducts, addProducts } from '../../redux/store';
+import { ProductsApi } from '../../api/product.api';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -20,9 +22,25 @@ const LoginScreen = ({ navigation }) => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (isLoggedIn) return navigation.navigate('Home', { screen: 'Catalog' });
-  }, [isLoggedIn]);
+  const redirectToHome = () => {
+    console.log('Redirect to home exec');
+    getProducts();
+  };
+
+  const getProducts = async () => {
+    const res = await ProductsApi()
+      .then((response) => {
+        return response;
+      })
+      .catch((error) => {
+        return error.response;
+      });
+
+    console.log('ABC');
+    console.log(res.data);
+    dispatch(addProducts({ data: res.data }));
+    return navigation.navigate('Home', { screen: 'Catalog' });
+  };
 
   const showAlert = (title, msg) => {
     setAlertVisible(true);
@@ -69,6 +87,7 @@ const LoginScreen = ({ navigation }) => {
     const uid = await getUserId();
     dispatch(login({ uid: uid, email: email, isLoggedIn: true }));
     setIsLoggedIn(true);
+    redirectToHome();
     return;
   };
 
