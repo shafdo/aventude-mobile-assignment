@@ -1,3 +1,7 @@
+Version 0.0.23
+    - Minor UI changes
+    - Debug console logs added.
+
 Version 0.0.22
     - Redux errors fixed.
 

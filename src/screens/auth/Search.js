@@ -19,7 +19,7 @@ const SearchScreen = ({ navigation, route }) => {
   return (
     <ScrollView style={{ flex: 1, backgroundColor: 'white' }}>
       <View style={{ ...styles.container }}>
-        <Text style={{ ...styles.heading3, textAlign: 'center', marginVertical: 40 }}>{"Search Results for '" + searchTerm + "'"}</Text>
+        <Text style={{ ...styles.heading3, textAlign: 'center', marginTop: 75, marginBottom: 10 }}>{"Search Results for '" + searchTerm + "'"}</Text>
 
         {/* No products found block */}
         {searchProducts.length <= 0 ? (
